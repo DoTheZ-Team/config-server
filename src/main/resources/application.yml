@@ -10,8 +10,8 @@ spring:
     config:
       server:
         git:
-          uri: ${ GIT_URI }
+          uri: ${{ GIT_URI }}
           search-paths: cloud
           default-label: main
-          username: ${ GIT_USERNAME }
-          password: ${ GIT_TOKEN }
+          username: ${{ GIT_USERNAME }}
+          password: ${{ GIT_TOKEN }}
