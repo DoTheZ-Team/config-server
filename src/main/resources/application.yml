@@ -9,5 +9,9 @@ spring:
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/configurations
+        git:
+          uri: { GIT_URI }
+          search-paths: cloud
+          default-label: main
+          username: { GIT_USERNAME }
+          password: { GIT_TOKEN }
