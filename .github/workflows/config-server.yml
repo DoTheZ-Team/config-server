@@ -1,0 +1,41 @@
+name: Glue Config Server CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set environment yml file
+        run: |
+          cd ./src/main/resources
+          touch ./application.yml
+          echo "${{ secrets.APPLICATION }}" >> ./application.yml
+        shell: bash
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Kakao Registry Login and Docker build
+        run: |
+          docker login ${{ secrets.GLUE_PROJECT }} --username ${{ secrets.ACCESS_ID }} --password ${{ secrets.ACCESS_SECRET }}
+          docker build -t glue-config:latest .
+          docker tag glue-config:latest ${{ secrets.GLUE_PROJECT }}/glue-repository/glue-config:latest
+          docker push ${{ secrets.GLUE_PROJECT }}/glue-repository/glue-config:latest
