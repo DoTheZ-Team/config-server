@@ -25,8 +25,8 @@ jobs:
 
       - name: Set environment yml file
         run: |
-          cd ./src/main/resources
-          touch ./application.yml
+          mkdir -p ./src/main/resources
+          touch ./src/main/resources/application.yml
           echo "${{ secrets.APPLICATION }}" >> ./application.yml
         shell: bash
 
