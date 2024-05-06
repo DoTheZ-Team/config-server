@@ -2,16 +2,20 @@ server:
   port: 8888
 
 spring:
-  profiles:
-    active: native
   application:
-    name: config
+    name: config-service
   cloud:
     config:
       server:
         git:
-          uri: { GIT_URI }
-          search-paths: cloud
+          uri: git@github.com:DoTheZ-Team/plug-msa-config.git
+          ignore-local-ssh-settings: true
           default-label: main
-          username: { GIT_USERNAME }
-          password: { GIT_TOKEN }
+          private-key: |
+            -----BEGIN EC PRIVATE KEY-----
+            MHcCAQEEII9g/jhr8Jh+WCciDQgf6dVcZDCoKRu+PkvN5Yvpav3noAoGCCqGSM49
+            AwEHoUQDQgAEIFGLTRadSHG24VizRGM+bQiXhKiZwIoji3ip+RT2lqUL3CabmglD
+            WaNd+1grIi1j9O9mRTPzyfN9VONc+BE2yw==
+            -----END EC PRIVATE KEY-----
+          host-key: AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+          host-key-algorithm: ecdsa-sha2-nistp256
