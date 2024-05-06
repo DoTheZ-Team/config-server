@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glue-config
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: glue-config
+  template:
+    metadata:
+      labels:
+        app: glue-config
+    spec:
+      containers:
+        - image: gcu-dudezi-dev.kr-central-2.kcr.dev/glue-repository/glue-config:latest
+          name: glue-config-server
+          ports:
+            - containerPort: 8888
+      imagePullSecrets:
+        - name: glue-repository
