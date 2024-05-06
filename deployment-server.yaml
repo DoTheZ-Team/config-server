@@ -14,7 +14,7 @@ spec:
         app: glue-config
     spec:
       containers:
-        - image: gcu-dudezi-dev.kr-central-2.kcr.dev/glue-repository/glue-config:13c54505971dc82819133a6969962f3fd06eae4e
+        - image: gcu-dudezi-dev.kr-central-2.kcr.dev/glue-repository/glue-config:52b8039fce687c23ef7dd2feab1c471cc8ec68c3
           name: glue-config-server
           ports:
             - containerPort: 8888
