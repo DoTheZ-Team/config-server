@@ -71,5 +71,5 @@ jobs:
           git config --global user.name "${{ secrets.USERNAME }}"
           git add .
           git commit -m "Update deployment-server.yaml"
-          git remote set-url origin https://${{ secrets.GIT_TOKEN }}@github.com/${{ secrets.PROJECT }}/config-service
+          git remote set-url origin https://${{ secrets.GIT_TOKEN }}@github.com/${{ secrets.GLUE_PROJECT }}/config-service
           git push --set-upstream origin HEAD
