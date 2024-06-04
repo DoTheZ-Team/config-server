@@ -3,10 +3,6 @@ name: Glue Config Server CI/CD
 on:
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - 'deployment-server.yaml'
-  pull_request:
-    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -58,7 +54,7 @@ jobs:
       - name: Checkout glue-config repository
         uses: actions/checkout@v3
         with:
-          repository: ${{ secrets.GIT_PROJECT }}/config-service
+          repository: ${{ secrets.GIT_PROJECT }}/glue-msa-config
           token: ${{ secrets.GIT_TOKEN}}
           ref: "main"
 
@@ -67,13 +63,13 @@ jobs:
 
       - name: Update image in deployment file
         run: |
-          yq e '.spec.template.spec.containers[0].image = "${{ secrets.GLUE_PROJECT }}/glue-repository/glue-config:${{ github.sha }}"' ./deployment-server.yaml -i
+          yq e '.spec.template.spec.containers[0].image = "${{ secrets.GLUE_PROJECT }}/glue-repository/glue-config:${{ github.sha }}"' ./k8s-template/config-deployment.yaml -i
 
       - name: Commit and Push changes
         run: |
           git config --global user.email "${{ secrets.EMAIL }}"
           git config --global user.name "${{ secrets.USERNAME }}"
           git add .
-          git commit -m "[skip ci] Update deployment-server.yaml"
-          git remote set-url origin https://${{ secrets.GIT_TOKEN }}@github.com/DoTheZ-Team/config-service
-          git push --set-upstream origin HEAD
+          git commit -m "[skip ci] Update config-server.yaml"
+          git remote set-url origin https://${{ secrets.GIT_TOKEN }}@github.com/${{ secrets.GIT_PROJECT }}/glue-msa-config
+          git push --set-upstream origin main
